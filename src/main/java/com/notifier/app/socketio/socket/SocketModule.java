@@ -52,7 +52,6 @@ public class SocketModule {
     }
 
 
-    //agrega el nuevo evento al sistema y lo agrega al log 
     private DataListener<Message> onNewFileAdded() {
         return (senderClient, data, ackSender) -> {
             log.info(data.toString());
@@ -68,11 +67,8 @@ public class SocketModule {
     }
 
 
-    //se conecta un nuevo cliente, se vuelva todo lo nuevo hacia el 
     private ConnectListener onConnected() {
         return (client) -> {
-            String room = client.getHandshakeData().getSingleUrlParam("room");
-            client.joinRoom(room);
             log.info("Socket ID[{}]  Connected to socket", client.getSessionId().toString());
 
             String userid = client.getHandshakeData().getSingleUrlParam("userid");    
@@ -88,7 +84,6 @@ public class SocketModule {
     }
 
 
-    //se va el cliente y se registra la visita --> debe ser el mail. 
     private DisconnectListener onDisconnected() {
         return client -> {
             log.info("Client[{}] - Disconnected from socket", client.getSessionId().toString());

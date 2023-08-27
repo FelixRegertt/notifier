@@ -18,13 +18,13 @@ public class TaskHub {
 				return false;
 			}
 			this.taskToDispatch.add(task);
-			this.taskToDispatch.notify(); //Notifica al consumidor
+			this.taskToDispatch.notify();
 			return true;
 		}
     }
     
 
-    public Event getNext() { //Duerme por eventos
+    public Event getNext() {
 
 		synchronized (this.taskToDispatch) {
 			while (this.taskToDispatch.isEmpty()) {

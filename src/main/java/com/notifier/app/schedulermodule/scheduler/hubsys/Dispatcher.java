@@ -33,7 +33,6 @@ public class Dispatcher {
     public void push(Event event){
         String channelName = event.getChannelName();
         synchronized(this.exchanges){
-            //busca el exchange por nombre y realiza el push
             for (Channel exchangesCreated : exchanges) {
                 if(exchangesCreated.getName().equals(channelName)){
                     exchangesCreated.push(event);
@@ -48,7 +47,6 @@ public class Dispatcher {
     public void subscribe(Sub sub){
         String channelName = sub.getChannelName();
         synchronized(this.exchanges){
-            //busca el exchange por nombre y realiza la sub
             for (Channel exchangesCreated : exchanges) {
                 if(exchangesCreated.getName().equals(channelName)){
                     exchangesCreated.subscribe(sub);
@@ -71,7 +69,7 @@ public class Dispatcher {
             }
         }
 
-        return res; //TODO
+        return res;
     }
 
 }

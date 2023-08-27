@@ -60,7 +60,7 @@ public class Manager {
     }
 
 
-    public List<String> newLogin(String userid){ //email
+    public List<String> newLogin(String userid){ 
         String fechaStr = this.getLastConnection(userid);
         List<String> res = new ArrayList<>(); 
 

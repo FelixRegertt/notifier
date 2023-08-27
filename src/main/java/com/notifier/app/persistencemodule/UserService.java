@@ -15,22 +15,18 @@ public class UserService {
     }
 
 
-    public void agregarUsuario(User usuario) {
+    public void save(User usuario) {
         usuarioRepository.save(usuario);
     }
 
 
-    public User obtenerUsuario(String id) {
+    public User get(String id) {
         return usuarioRepository.findById(id).orElse(null);
     }
 
 
-    public void actualizarUsuario(User usuario) {
+    public void update(User usuario) {
         usuarioRepository.save(usuario);
     }
 
-
-    public void eliminarUsuario(String id) {
-        usuarioRepository.deleteById(id);
-    }
 }

@@ -105,12 +105,12 @@ public class SocketModule {
         User u = new User();
         u.setId(userid);
         u.setTime(time);
-        userService.actualizarUsuario(u);
+        userService.update(u);
     }
 
 
     private void retrieveClientInfo(String userid) {
-        User user = userService.obtenerUsuario(userid);   
+        User user = userService.get(userid);   
         if(user ==null)
             return;
         manager.addUserInfo(user);

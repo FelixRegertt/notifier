@@ -47,9 +47,9 @@ Puedes comunicarte con el servidor WebSocket utilizando solicitudes WebSocket. A
 
 ### Realizar una Solicitud al Servidor
 
-- **URL del Servidor WebSocket**: `ws://localhost:8080?userid=juan%40gmail.com`
+- **URL del Servidor WebSocket**: `ws://localhost:8080`
 
-- **Parametros**: `userid=mail_ejemplo%40gmail.com` (escapa el @)
+- **Parametros**: `userid=mail_ejemplo%40gmail.com` ( %40 escapa el @)
 
 - **Método**: WebSocket, donde el evento por el que se escucha es `default` 
 

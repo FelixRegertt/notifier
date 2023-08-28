@@ -1,4 +1,4 @@
-package com.notifier.app.persistencemodule;
+package com.notifier.app.db;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

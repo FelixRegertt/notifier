@@ -1,4 +1,4 @@
-package com.notifier.app.schedulermodule.model;
+package com.notifier.app.channels.model;
 
 import com.corundumstudio.socketio.SocketIOClient;
 

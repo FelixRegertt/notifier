@@ -1,7 +1,7 @@
-package com.notifier.app.schedulermodule.model;
+package com.notifier.app.channels.model;
 
 import com.corundumstudio.socketio.SocketIOClient;
-import com.notifier.app.schedulermodule.scheduler.hubsys.Dispatcher;
+import com.notifier.app.channels.events.Dispatcher;
 
 
 public class Event {

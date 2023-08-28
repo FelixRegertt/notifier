@@ -4,15 +4,15 @@ import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DataListener;
 import com.corundumstudio.socketio.listener.DisconnectListener;
-import com.notifier.app.persistencemodule.User;
-import com.notifier.app.persistencemodule.UserService;
-import com.notifier.app.schedulermodule.Log;
-import com.notifier.app.schedulermodule.Manager;
-import com.notifier.app.schedulermodule.model.Event;
-import com.notifier.app.schedulermodule.model.Sub;
-import com.notifier.app.schedulermodule.scheduler.exchange.Channel;
-import com.notifier.app.schedulermodule.scheduler.hubsys.TaskConsumer;
-import com.notifier.app.schedulermodule.scheduler.hubsys.TaskHub;
+import com.notifier.app.channels.Channel;
+import com.notifier.app.channels.Log;
+import com.notifier.app.channels.Manager;
+import com.notifier.app.channels.events.EventConsumer;
+import com.notifier.app.channels.events.EventQueue;
+import com.notifier.app.channels.model.Event;
+import com.notifier.app.channels.model.Sub;
+import com.notifier.app.db.User;
+import com.notifier.app.db.UserService;
 import com.notifier.app.socketio.model.Message;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
 public class SocketModule {
 
     private final SocketIOServer server;
-    private TaskHub taskHub = new TaskHub();
+    private EventQueue eventQueue = new EventQueue();
     private String defaultChannel = "default";
     private Manager manager;
     private Log logEvents = new Log();
@@ -44,10 +44,10 @@ public class SocketModule {
         server.addDisconnectListener(onDisconnected());
         server.addEventListener(defaultChannel, Message.class, onNewFileAdded());
         Channel commonChannel = new Channel(defaultChannel);
-        manager = new Manager(taskHub, logEvents);
+        manager = new Manager(eventQueue, logEvents);
         manager.addChannel(commonChannel);
         
-        Thread consumer = new Thread(new TaskConsumer(taskHub));
+        Thread consumer = new Thread(new EventConsumer(eventQueue));
         consumer.start();
     }
 

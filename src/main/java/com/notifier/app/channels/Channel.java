@@ -1,11 +1,11 @@
-package com.notifier.app.schedulermodule.scheduler.exchange;
+package com.notifier.app.channels;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.corundumstudio.socketio.SocketIOClient;
-import com.notifier.app.schedulermodule.model.Event;
-import com.notifier.app.schedulermodule.model.Sub;
+import com.notifier.app.channels.model.Event;
+import com.notifier.app.channels.model.Sub;
 import com.notifier.app.socketio.model.Message;
 import com.notifier.app.socketio.model.MessageType;
 

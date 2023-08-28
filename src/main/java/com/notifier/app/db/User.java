@@ -1,4 +1,4 @@
-package com.notifier.app.persistencemodule;
+package com.notifier.app.db;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;

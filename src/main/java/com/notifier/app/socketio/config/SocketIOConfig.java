@@ -4,8 +4,10 @@ import com.corundumstudio.socketio.SocketIOServer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 
+@CrossOrigin(origins = "*")
 @Configuration
 public class SocketIOConfig {
 
@@ -21,7 +23,8 @@ public class SocketIOConfig {
         com.corundumstudio.socketio.Configuration config = new com.corundumstudio.socketio.Configuration();
         config.setHostname(host);
         config.setPort(port);
-                return new SocketIOServer(config);
+
+        return new SocketIOServer(config);
     }
 
 }

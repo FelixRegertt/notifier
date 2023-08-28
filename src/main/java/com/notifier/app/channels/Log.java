@@ -22,14 +22,13 @@ public class Log {
 
         synchronized(this.fileLog){
             for (int i = fileLog.size() - 1; i >= 0; i--) {   
-                String message = fileLog.get(i);
                 String[] parts = fileLog.get(i).split("::", 2);
                 String timeLog = parts[0];
 
                 if(timeLog.compareTo(userLastConn) <= 0){
                 break;
                 }
-                result.add(message);
+                result.add(parts[1]);
             }
         }
         return result;

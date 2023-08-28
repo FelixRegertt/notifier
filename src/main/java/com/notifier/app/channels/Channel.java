@@ -28,9 +28,8 @@ public class Channel {
     public void push(Event event) {
 
         for (Sub sub : subs) {
-            sub.setMessage("Agregado " + event.getInfo());
             SocketIOClient client = sub.getClient();
-            client.sendEvent(channelName, new Message(MessageType.SERVER, sub.getMessage()));
+            client.sendEvent(channelName, new Message(MessageType.SERVER, event.getInfo()));
         }
     }
 

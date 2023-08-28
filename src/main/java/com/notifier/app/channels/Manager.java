@@ -22,8 +22,8 @@ public class Manager {
     private EventQueue eventQueue;
     private Log log;
     private Map<String, String> users = new HashMap<>();
-
 	private Lock lock = new ReentrantLock();
+
 
     public Manager(EventQueue eventQueue, Log log){
         this.eventQueue = eventQueue;
@@ -55,7 +55,7 @@ public class Manager {
     }
 
 
-    public String getLastConnection(String userid) {
+    private String getLastConnection(String userid) {
         lock.lock();
         String lastConnection = this.users.get(userid);
         lock.unlock();
@@ -63,6 +63,10 @@ public class Manager {
     }
 
 
+    /*
+     * Busca la ultima conexion del userid, y hace una diferencia respecto a la
+     * ultima conexion de ese usuario para retornar todos los sucesos en ese lapso de tiempo
+     */
     public List<String> newLogin(String userid){ 
         String fechaStr = this.getLastConnection(userid);
         List<String> res = new ArrayList<>(); 

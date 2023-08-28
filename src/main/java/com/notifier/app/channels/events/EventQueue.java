@@ -11,6 +11,9 @@ public class EventQueue {
     private int maxCapacity = 20;
 
 
+	/*
+	 * Publica el evento en la lista y despierta al thread consumer
+	 */
     public boolean tryToAdd(Event event) {
         synchronized(this.eventsToDispatch) {
 
@@ -24,6 +27,9 @@ public class EventQueue {
     }
     
 
+	/*
+	 * Retorna el siguiente evento a consumir, durmiento al thread consumer cuando no hay nada
+	 */
     public Event getNext() {
 
 		synchronized (this.eventsToDispatch) {

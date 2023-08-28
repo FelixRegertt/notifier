@@ -22,6 +22,9 @@ public class Channel {
     }
 
 
+    /*
+     * Notifica el mensaje a todos los clientes subscriptos al canal 
+     */
     public void push(Event event) {
 
         for (Sub sub : subs) {
@@ -42,6 +45,9 @@ public class Channel {
     }
 
 
+    /*
+     * Elimina el cliente de la lista de subs y retorna su userid
+     */
     public String remove(SocketIOClient client) {
         
         String res = "";

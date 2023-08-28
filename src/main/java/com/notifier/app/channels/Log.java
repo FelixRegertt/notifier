@@ -14,6 +14,9 @@ public class Log {
     private Lock lock = new ReentrantLock();
 
 
+    /*
+     * Retorna la lista de sucesos a partir del ultimo hasta la fecha dada
+     */
     public List<String> getMessagesUntilDate(Date date) {
         List<String> result = new ArrayList<>();
 
@@ -37,6 +40,9 @@ public class Log {
     }
 
 
+    /*
+     * Registro de nuevo suceso 
+     */
     public void addNewEntry(String messageToSave) {
         lock.lock();
         fileLog.add(fileLog.size(), messageToSave); 

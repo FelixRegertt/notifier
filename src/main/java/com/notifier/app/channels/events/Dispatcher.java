@@ -33,6 +33,9 @@ public class Dispatcher {
     }
 
 
+    /*
+     * Publica el evento en el canal que especifica el parametro
+     */
     public void push(Event event){
         String channelName = event.getChannelName();
         lock.lock();
@@ -47,6 +50,9 @@ public class Dispatcher {
     }
 
 
+    /*
+     * Agrega la sub en el canal que espeficia
+     */
     public void subscribe(Sub sub){
         String channelName = sub.getChannelName();
         lock.lock();
@@ -60,6 +66,9 @@ public class Dispatcher {
     }
 
 
+    /*
+     * Elimina la sub del canal, retornando el userid 
+     */
     public String remove(SocketIOClient client, String channel) {
         String res = "";
         lock.lock();

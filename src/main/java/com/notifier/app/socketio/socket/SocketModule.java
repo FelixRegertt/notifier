@@ -38,6 +38,9 @@ public class SocketModule {
     private UserService userService;
 
 
+    /*
+     * Creacion del canal general, junto con el thread consumidor de eventos
+     */
     public SocketModule(SocketIOServer server) {
         this.server = server;
         server.addConnectListener(onConnected());
@@ -52,6 +55,10 @@ public class SocketModule {
     }
 
 
+    /*
+     * Cuando un evento es lanzado, se agrega una nueva entrada en el log y ademas se publica 
+     * el evento en la cola para que sea consumido
+     */
     private DataListener<Message> onNewFileAdded() {
         return (senderClient, data, ackSender) -> {
             log.info(data.toString());
@@ -67,6 +74,10 @@ public class SocketModule {
     }
 
 
+    /*
+     * Cuando se recibe la conexion, se subscribe al cliente en el canal general y se le 
+     * envian todos los sucesos del log posteriores a su ultima conexion
+     */
     private ConnectListener onConnected() {
         return (client) -> {
             log.info("Socket ID[{}]  Connected to socket", client.getSessionId().toString());
@@ -84,6 +95,9 @@ public class SocketModule {
     }
 
 
+    /*
+     * Cuando finaliza la conexion, se remueve al cliente de la lista de subs y se registra la conexion
+     */
     private DisconnectListener onDisconnected() {
         return client -> {
             log.info("Client[{}] - Disconnected from socket", client.getSessionId().toString());
@@ -93,6 +107,9 @@ public class SocketModule {
     }
 
 
+    /*
+     * Registro de la conexion del cliente 
+     */
     private void connectionRegister(String userid) {
         Date currentDate = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

@@ -6,8 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+
 
 import com.corundumstudio.socketio.SocketIOClient;
 import com.notifier.app.channels.events.Dispatcher;
@@ -22,7 +21,6 @@ public class Manager {
     private EventQueue eventQueue;
     private Log log;
     private Map<String, String> users = new HashMap<>();
-	private Lock lock = new ReentrantLock();
 
 
     public Manager(EventQueue eventQueue, Log log){
@@ -48,20 +46,19 @@ public class Manager {
 
     public String removeSub(SocketIOClient client, String channel) {
         String userid =  Dispatcher.getInstance().remove(client, channel);
-        lock.lock();
-        this.users.remove(userid);
-        lock.unlock();
+        synchronized(this.users){
+            this.users.remove(userid);
+        }
         return userid;
     }
 
 
     private String getLastConnection(String userid) {
-        lock.lock();
-        String lastConnection = this.users.get(userid);
-        lock.unlock();
-        return lastConnection;
+        synchronized(this.users){
+            return this.users.get(userid);
+        }
     }
-
+    
 
     /*
      * Busca la ultima conexion del userid, y hace una diferencia respecto a la
@@ -86,9 +83,10 @@ public class Manager {
 
 
     public void addUserInfo(User user) {
-        lock.lock();
-        users.put(user.getId(), user.getTime());
-        lock.unlock();
+        synchronized(this.users){
+            users.put(user.getId(), user.getTime());
+
+        }
     }
 
 }

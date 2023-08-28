@@ -40,7 +40,6 @@ public class EventQueue {
 					e.printStackTrace();
 				}
 			}
-
 			return this.eventsToDispatch.remove(0);
 		}
 	}

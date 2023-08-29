@@ -26,10 +26,14 @@ public class Channel {
      * Notifica el mensaje a todos los clientes subscriptos al canal 
      */
     public void push(Event event) {
+        SocketIOClient source = event.getSenderClient();
 
         for (Sub sub : subs) {
             SocketIOClient client = sub.getClient();
-            client.sendEvent(channelName, new Message(MessageType.SERVER, event.getInfo()));
+            
+            if(source.getSessionId() != client.getSessionId()){
+                client.sendEvent(channelName, new Message(MessageType.SERVER, event.getInfo()));
+            }   
         }
     }
 

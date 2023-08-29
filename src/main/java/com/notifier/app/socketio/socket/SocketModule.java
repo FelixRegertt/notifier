@@ -46,6 +46,8 @@ public class SocketModule {
         server.addConnectListener(onConnected());
         server.addDisconnectListener(onDisconnected());
         server.addEventListener(defaultChannel, Message.class, onNewFileAdded());
+        server.addEventListener("auth", Message.class, onUserAuth());
+
         Channel commonChannel = new Channel(defaultChannel);
         manager = new Manager(eventQueue, logEvents);
         manager.addChannel(commonChannel);
@@ -75,23 +77,29 @@ public class SocketModule {
 
 
     /*
-     * Cuando se recibe la conexion, se subscribe al cliente en el canal general y se le 
-     * envian todos los sucesos del log posteriores a su ultima conexion
+     * Establecemos conexion
      */
     private ConnectListener onConnected() {
         return (client) -> {
             log.info("Socket ID[{}]  Connected to socket", client.getSessionId().toString());
 
-            String userid = client.getHandshakeData().getSingleUrlParam("userid");    
-            this.retrieveClientInfo(userid);
-            
-            Sub sub = new Sub(defaultChannel, client, userid);
-            manager.newSub(sub);
-            
-            String result = manager.newLogin(userid).stream().collect(Collectors.joining(", "));
-            client.sendEvent(defaultChannel, result);
         };
+    }
 
+
+    /*
+     * Con una conexion establecida, se subscribe al cliente en el canal general y se le 
+     * envian todos los sucesos del log posteriores a su ultima conexion 
+     */
+    private DataListener<Message> onUserAuth() {
+        return (senderClient, data, ackSender) -> {
+            String userid = data.getMessage();    
+            this.retrieveClientInfo(userid);
+            Sub sub = new Sub(defaultChannel, senderClient, userid);
+            manager.newSub(sub);
+            String result = manager.newLogin(userid).stream().collect(Collectors.joining(", "));
+            senderClient.sendEvent(defaultChannel, result);
+        };
     }
 
 
